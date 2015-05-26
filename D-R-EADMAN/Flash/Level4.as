@@ -3,6 +3,7 @@
 	import flash.display.Shape;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
+	import flash.media.SoundTransform;
 
 	public class Level4 extends GameLevel
 	{
@@ -43,9 +44,16 @@
 			game.currentlevel = 3;
 			world.back = new Level4Background ;
 			world.load();
+			
+
 
 			player = new Player(400,550,game,world,this);
 			super.load();
+			
+			
+			game.soundtransformm = new SoundTransform(game.options.vol);
+			game.music =new Level2Music;
+			game.channel = game.music.play(0,9999,game.soundtransformm);
 			game.addChild(world);
 			game.addChild(grey);
 			var rectangle:Shape = new Shape  ;

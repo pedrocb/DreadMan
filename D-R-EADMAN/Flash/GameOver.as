@@ -21,11 +21,13 @@
 		}
 		
 		public function newgame(e:MouseEvent){
+			game.levelmanager.currentLevel.playsound();
 			removebuttons();
 			game.levelmanager.loadLevel(new (Object(game.levelmanager.currentLevel).constructor)(game));
 		}
 		
 		public function startmenu(e:MouseEvent){
+			game.levelmanager.currentLevel.playsound();
 			removebuttons();
 			var menu = new StartMenu(game);
 			game.levelmanager.loadLevel(menu);

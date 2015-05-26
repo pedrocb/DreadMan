@@ -1,6 +1,7 @@
 ﻿package 
 {
 	import flash.display.Shape;
+	import flash.media.SoundTransform;
 	public class Level2 extends GameLevel
 	{
 
@@ -50,7 +51,12 @@
 			player.addChild(rectangle);
 			game.addChild(player);
 			game.addChild(barra);
+			game.soundtransformm = new SoundTransform(game.options.vol);
+			game.music =new Level2Music;
+			game.channel = game.music.play(0,9999,game.soundtransformm);
 		}
+			
+		
 	}
 
 }

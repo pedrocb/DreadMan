@@ -20,6 +20,8 @@
 		var exitbutton = new Button1(626,486,94,39);
 		var newgamebutton = new Button1(622,310,113,39);
 		var optionsbutton = new Button1(610.30,398.30,175.60,39);
+		var helpbutton = new Button1(621.15,355.80,114.20,41.50);
+	
 	
 		public function StartMenu(game:Game)
 		{
@@ -43,19 +45,28 @@
 			newgamebutton.addEventListener(MouseEvent.CLICK, startgame);
 			game.stage.addEventListener(Event.ENTER_FRAME,update);
 			optionsbutton.addEventListener(MouseEvent.CLICK,options);
+			helpbutton.addEventListener(MouseEvent.CLICK,help);
 			addChild(newgamebutton);
 			addChild(creditsbutton);
 			addChild(exitbutton);
+			addChild(helpbutton);
 			addChild(grey);
 			addChild(optionsbutton);
 			addChild(player);
 		}
 		
+		public function help(e:MouseEvent){
+			playsound();
+			game.levelmanager.loadLevel(new Help(game));
+		}
+		
 		public function creditsbuttonpressed(e: MouseEvent)
 		{
+			playsound();
 			game.levelmanager.loadLevel(new CreditsMenu(game));
 		}
 		public function startgame(e:MouseEvent){
+			playsound();
 			game.levelmanager.loadLevel(new LevelMenu(game));
 		}
 		
@@ -69,6 +80,7 @@
 		}
 		
 		public function options(e:MouseEvent){
+			playsound();
 			game.levelmanager.loadLevel(new OptionsMenu(game));
 		}
 		
@@ -99,12 +111,12 @@
 		
 		public function playmusic(){
 			game.soundtransformm = new SoundTransform(game.options.vol);
-			game.music = new Sound();
-			game.music.load(new URLRequest('test.mp3'));
+			game.music =new MenuMusic;
 			game.channel = game.music.play(0,9999,game.soundtransformm);
 		}
 		
 		public function quit(e:MouseEvent){
+			playsound();
 			fscommand("quit");
 		}
 	}

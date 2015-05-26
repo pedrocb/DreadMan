@@ -9,6 +9,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileStream;
+	import flash.media.Sound;
 
 	public class GameLevel extends Level
 	{
@@ -25,6 +26,12 @@
 		var keys:Array;
 		var paused:Boolean;
 		var door:MovieClip;
+		
+		var tau:Sound;
+		var death:Sound;
+		var win:Sound;
+		var picksound:Sound;
+		var played;
 		
 		var pause:Pause;
 		var gameover:GameOver;
@@ -73,13 +80,18 @@
 			levelcomplete = new LevelComplete(this);
 			levelcomplete.x = Game.SCREEN_WIDTH/2 - levelcomplete.width/2;
 			levelcomplete.y = Game.SCREEN_HEIGHT/2 - levelcomplete.height/2;
-					}
+			tau = new HitMusic;
+			death = new DeathSoun;
+			win = new WinMusic;
+			picksound = new PickSound;
+			played = false;
+					
+				}
 		override public function load()
 		{
 			game.stage.addEventListener(Event.ENTER_FRAME,update);
 			game.stage.addEventListener(KeyboardEvent.KEY_DOWN,checkkey);
 			game.channel.stop();
-
 		}
 		
 		public function checkkey(e:KeyboardEvent){
@@ -99,9 +111,12 @@
 			}
 		}
 	
+		public function hitsound(){
+			tau.play(0,1,game.soundtransformm);
+		}
+	
 		public function update(e:Event)
 		{
-			//trace(stage.frameRate);
 			if(player.hitTestObject(door) && player.keys == keysGUI.length){
 				door.gotoAndStop(2);
 				completed();
@@ -124,6 +139,7 @@
 			{
 				if (player.hitTestObject(keys[i]))
 				{
+					picksound.play(0,1,game.soundtransformm);
 					world.removeChild(keys[i]);
 					keys[i] = keys[keys.length - 1];
 					keys.pop();
@@ -152,14 +168,18 @@
 						}
 						else
 						{
+							if(!played){
+								die();
+							}
 							game.stage.frameRate = 0;
 							end();
-							return;
+							break;
 						}
 					}
 					else{
 						if(player.attack.pa.hitTestObject(enemy)){
 							if(!enemy.blink.running){
+								hitsound();
 								enemy.life--;
 								if(enemy.life == 0){
 									world.removeChild(enemy);
@@ -179,6 +199,8 @@
 		}
 		
 		public function completed(){
+			game.stage.removeEventListener(Event.ENTER_FRAME,update);
+			win.play(0,1,game.soundtransformm);
 			stage.frameRate = 0;
 			addChild(levelcomplete);
 			if(game.currentlevel==game.lastlevel){
@@ -189,6 +211,11 @@
 			}
 			trace(game.lastlevel);
 			levelcomplete.finish();
+		}
+		
+		public function die(){
+			death.play(0,1,game.soundtransformm);
+			played = true;
 		}
 		
 		public function end(){
@@ -220,6 +247,9 @@
 			game.stage.removeEventListener(Event.ENTER_FRAME,update);
 			game.stage.removeEventListener(KeyboardEvent.KEY_DOWN,checkkey);
 			player.dispose();
+			if(game.channel){
+				game.channel.stop();
+			}
 		}
 	}
 

@@ -70,8 +70,8 @@
 		}
 
 		public function quit(e:MouseEvent){
+			playsound();
 			game.levelmanager.loadLevel(new StartMenu(game));
-			
 		}
 		
 		override public function dispose(){
@@ -109,6 +109,7 @@
 		}
 		
 		public function turnup(e:MouseEvent){
+			playsound();
 			voolume.Bar.width = game.options.lastvol* voolume.width;
 			game.soundtransformm.volume = voolume.Bar.width/voolume.width;
 			game.options.vol = game.soundtransformm.volume;
@@ -125,6 +126,7 @@
 		}
 		
 		public function mute(e:MouseEvent){
+			playsound();
 			game.options.lastvol = game.options.vol;
 			voolume.Bar.width = 0;
 			game.soundtransformm.volume = 0;
@@ -144,6 +146,7 @@
 		
 		public function changedifficulty(e:MouseEvent)
 		{
+			playsound();
 			for (var i=0; i<difficulties.length; i++)
 			{
 				if (e.target == difficulties[i])

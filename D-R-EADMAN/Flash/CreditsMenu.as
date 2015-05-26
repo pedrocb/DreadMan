@@ -17,6 +17,7 @@
 			quitbutton.addEventListener(MouseEvent.CLICK, buttonpressed);
 		}
 		public function buttonpressed(e:MouseEvent){
+			playsound();
 			game.levelmanager.loadLevel(new StartMenu(game));
 		}
 	}

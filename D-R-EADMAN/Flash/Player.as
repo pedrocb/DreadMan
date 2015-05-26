@@ -85,7 +85,9 @@
 				attacking--;
 				if (attacking==0)
 				{
-					gotoAndStop(1);
+					if(!dead){
+						gotoAndStop(1);
+					}
 				}
 			}
 			if (deadbar>0)

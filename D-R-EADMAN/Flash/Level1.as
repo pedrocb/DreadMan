@@ -3,7 +3,8 @@
 	import flash.display.Shape;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
-
+	import flash.media.SoundTransform;
+	
 	public class Level1 extends GameLevel
 	{
 		public function Level1(game:Game)
@@ -56,6 +57,9 @@
 			player.addChild(rectangle);
 			game.addChild(player);
 			game.addChild(barra);
+			game.soundtransformm = new SoundTransform(game.options.vol);
+			game.music =new Level1Music;
+			game.channel = game.music.play(0,9999,game.soundtransformm);
 		}
 
 	}

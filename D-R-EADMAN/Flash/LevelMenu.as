@@ -10,6 +10,7 @@
 		var buttons;
 		var tablet;
 		var tutorial;
+		var back;
 		public function LevelMenu(game:Game) {
 			buttons = [new Button1(80.35,132.30,169.40,35.60),new Button1(301.35,136.30,178.10,35.60),new Button1(524.35,136.30,178.10,35.60),new Button1(193.35,184.30,178.10,35.60),new Button1(405.35,184.30,178.10,35.60)];
 			super(game);
@@ -30,13 +31,16 @@
 					buttons[i].addEventListener(MouseEvent.CLICK,level);
 				}
 			}
-			tutorial = new Button1(605.30,236.25,119.05,45.65);
-			tablet.addChild(tutorial);	
-			tutorial.addEventListener(MouseEvent.CLICK,startmenu);
-			
+			back = new Button1(605.30,236.25,119.05,45.65);
+			tablet.addChild(back);	
+			back.addEventListener(MouseEvent.CLICK,startmenu);
+			tutorial = new Button1(299.30,237.30,200,46);
+			tablet.addChild(tutorial);
+			tutorial.addEventListener(MouseEvent.CLICK,tut);
 		}
 		
 		public function level(e:MouseEvent){
+			playsound();
 			for(var i=0;i<buttons.length;i++){
 				if(e.target == buttons[i]){
 					game.levelmanager.loadLevel(new(Object(game.levels[i]).constructor)(game));
@@ -44,7 +48,15 @@
 			}
 		}
 		
+		public function tut(e:MouseEvent){
+			playsound();
+			var menu = new Tutorial(game);
+			game.levelmanager.loadLevel(menu);
+		}
+		
+		
 		public function startmenu(e:MouseEvent){
+			playsound();
 			var menu = new StartMenu(game);
 			game.levelmanager.loadLevel(menu);
 		}

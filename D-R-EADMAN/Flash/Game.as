@@ -23,7 +23,7 @@
 			var aux = new StartMenu(this);
 			levelmanager.loadLevel(aux);
 			aux.playmusic();
-			levels = [new Level1(this), new Level2(this), new Level3(this),new Level4(this)];
+			levels = [new Level1(this), new Level2(this), new Level3(this),new Level4(this),new Level5(this)];
 			channel.soundTransform = soundtransformm;
 		}
 
